@@ -1,0 +1,244 @@
+.container-profile {
+    display: flex;
+    align-items: center;       
+    justify-content: space-between; 
+    gap: 40px;               
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.profile{
+    border-radius: 50%;
+}
+
+.container-description {
+    flex: 1; /* take remaining width */
+}
+
+.container-description h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.container-description p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.container-post {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+  background-color: #EDF7FA;
+}
+
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.post-header h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.post-header a {
+  color: #007acc;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.post-management {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; 
+}
+
+.post-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 300px; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.post-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.post-card .post-meta {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.hobbies-section {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.hobbies-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.hobby-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.hobby-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.hobby-info {
+  flex: 1;
+}
+
+.hobby-info h4 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.hobby-year {
+  background: #142850;
+  color: white;
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-right: 10px;
+}
+
+.hobby-category {
+  color: #8695a4;
+  font-size: 0.9rem;
+}
+
+.hobby-info p {
+  margin-top: 10px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  background: #fff;  
+  border-top: 1px solid #eee;
+}
+
+.social-icons {
+  margin-bottom: 15px;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin: 0 12px;
+  font-size: 24px;
+  color: #142850;  
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #007acc;  
+}
+
+.footer p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+
+/* === Mobile Responsive (phones only) === */
+@media (max-width: 480px) {
+  /* Profile section stacked */
+  .container-profile {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .profile {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+  }
+
+  .container-description h3 {
+    font-size: 1.5rem;
+  }
+
+  .container-description p {
+    font-size: 0.9rem;
+  }
+
+  /* Posts */
+  .container-post {
+    padding: 20px;
+  }
+
+  .post-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .post-management {
+    flex-direction: column;
+  }
+
+  .post-card {
+    min-width: unset; /* remove fixed width for stacking */
+    width: 100%;
+  }
+
+  /* Hobbies */
+  .hobby-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hobby-card img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+  }
+
+  .hobby-info h4 {
+    font-size: 1rem;
+  }
+
+  .hobby-info p {
+    font-size: 0.9rem;
+  }
+
+  /* Footer */
+  .social-icons a {
+    font-size: 20px;
+    margin: 0 8px;
+  }
+
+  .footer p {
+    font-size: 0.8rem;
+  }
+}
+
