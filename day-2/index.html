@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulasi Cicilan Motor</title>
+</head>
+<body>
+  <h2>Simulasi Cicilan Motor</h2>
+
+  <label>Umur (tahun): </label><br>
+  <input type="number" id ="umur"><br><br>
+
+  <label>Harga Motor (Rp):</label><br>
+  <input type="number" id="hargaMotor" /><br><br>
+
+  <label>Pendapatan (Rp):</label><br>
+  <input type="number" id="pendapatan" /><br><br>
+
+  <label>Uang Muka (DP) (Rp):</label><br>
+  <input type="number" id="dp" /><br><br>
+
+  <label>Tenor (bulan):</label><br>
+  <select id="tenor">
+    <option value="12">12 bulan</option>
+    <option value="24">24 bulan</option>
+    <option value="36">36 bulan</option>
+    <option value="48">48 bulan</option>
+  </select><br><br>
+
+  <!-- <label>Bunga per Tahun (%):</label><br>
+  <input type="number" id="bunga" placeholder="Contoh: 8" /><br><br> -->
+
+  <button onclick="hitungCicilan()">Hitung Cicilan</button>
+
+  <h3>Hasil:</h3>
+  <div id="hasil"></div>
+
+  <h3>Semua Data Kreditur</h3>
+  <table id="data-table" border="1" cellpadding="8">
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Usia</th>
+        <th>Pekerjaan</th>
+        <th>DP</th>
+        <th>Harga Motor</th>
+        <th>Pendapatan</th>
+      </tr>
+    </thead>
+    <tbody id="data-table-body"></tbody>
+  </table>
+
+  <h3>Data Kreditur (Filtered)</h3>
+  <table id="filtered-table" border="1" cellpadding="8">
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Usia</th>
+        <th>Pekerjaan</th>
+        <th>DP</th>
+        <th>Harga Motor</th>
+        <th>Pendapatan</th>
+      </tr>
+    </thead>
+    <tbody id="filtered-table-body"></tbody>
+  </table>
+
+  <h2>Data Kreditur</h2>
+
+  <label>Nama : </label><br>
+  <input type="text" id="nama"><br><br>
+
+  <label>Usia : </label><br>
+  <input type="number" id="usia"><br><br>
+
+  <label>Pekerjaan : </label><br>
+  <input type="text" id="pekerjaan"><br><br>
+
+  <label for="dpKreditur">Dp (Rp) : </label><br>
+  <input type="number" id="dpKreditur"><br><br>
+
+  <label for="hargaMotorKreditur">Harga Motor (Rp):</label><br>
+  <input type="number" id="hargaMotorKreditur" /><br><br>
+
+  <label for="pendapatanKreditur">Pendapatan (Rp) : </label><br>
+  <input type="number" id="pendapatanKreditur"><br><br>
+
+  <button onclick="tambahDataKreditur()">Tambah Data</button>
+
+  <script>
+    function hitungCicilan() {
+      const harga = parseFloat(document.getElementById("hargaMotor").value);
+      const pendapatan = parseFloat(document.getElementById("pendapatan").value);
+      const dp = parseFloat(document.getElementById("dp").value);
+      const tenor = parseInt(document.getElementById("tenor").value);
+      const umur = parseInt(document.getElementById("umur").value);
+      // const bungaInput = parseFloat(document.getElementById("bunga").value);
+      const hasilDiv = document.getElementById("hasil");
+
+      // Validasi input
+      if (isNaN(harga) || isNaN(dp) || isNaN(umur)) {
+        hasilDiv.innerHTML = "<span style='color:red;'>Harga, DP, dan Umur harus diisi dengan angka.</span>";
+        return;
+      }
+
+    if (pendapatan < 3000000){
+      hasilDiv.innerHTML = "<span style='color:red;'>Pendapatan harus lebih besar dari Rp. 3.000.000.</span>";
+        return;
+    }
+
+      const dpMinimum = harga * 0.3;
+      if (dp < dpMinimum) {
+        hasilDiv.innerHTML = `<span style="color:red;">DP minimal adalah 30% dari harga motor (Rp ${dpMinimum.toFixed(0)}).</span>`;
+        return;
+      }
+
+      if (umur < 21 || umur > 55){
+        hasilDiv.innerHTML = `<span style="color:red;">Umur harus 21-55</span>`;
+        return;
+      }
+
+      let hargaBunga;
+      let hargaPerbulan = 0;
+
+      if (tenor == 12){
+        hargaBunga = (0.03 * harga)
+      } else if(tenor == 24){
+          hargaBunga =  (0.06 * harga)
+      } else if(tenor == 36){
+          hargaBunga =  (0.1 * harga)
+      } else if(tenor == 48){
+          hargaBunga =  (0.2 * harga)
+      }
+
+      // const bunga = bungaInput / 100;
+
+      // Perhitungan
+      // const pinjaman = harga - dp;
+      const totalBunga = hargaBunga;
+      const totalPembayaran = harga + totalBunga;
+      const cicilanBulanan = totalPembayaran / tenor;
+
+
+      var html = `
+        <p>Harga Motor: Rp ${harga.toLocaleString()}</p>
+        <p>DP: Rp ${dp.toLocaleString()}</p>
+        <p>Pinjaman: Rp ${harga.toLocaleString()}</p>
+        <p>Total Pembayaran: Rp ${totalPembayaran.toLocaleString()}</p>
+        <p><strong>Cicilan per bulan: Rp ${cicilanBulanan.toLocaleString(undefined, { maximumFractionDigits: 0 })}</strong></p>
+      `;
+
+      html += `
+        <p>Biaya per bulan:</p>
+        <ul>`;
+      for (var i = 1; i <= tenor; i++) {
+        hargaPerbulan += cicilanBulanan
+        html += `<li>Bulan ke-${i}: Rp ${hargaPerbulan}</li>`;
+      }
+      html += `</ul>`;
+
+      hasilDiv.innerHTML = html;
+    }
+  
+
+      const pengajuanLeasing = [
+      { nama: "Andi", usia: 25, pekerjaan: "Karyawan", dp: 6000000, hargaMotor: 18000000, pendapatan: 3000000 },
+      { nama: "Budi", usia: 19, pekerjaan: "Pelajar", dp: 4000000, hargaMotor: 16000000, pendapatan: 5000000 },
+      { nama: "Citra", usia: 33, pekerjaan: "Wiraswasta", dp: 8000000, hargaMotor: 20000000, pendapatan: 2000000 }
+      ];
+
+      function renderTable(dataArray, targetId) {
+        const dataTableBody = document.getElementById(targetId);
+        dataTableBody.innerHTML = "";
+
+        dataArray.forEach((data) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${data.nama}</td>
+            <td>${data.usia}</td>
+            <td>${data.pekerjaan}</td>
+            <td>${data.dp}</td>
+            <td>${data.hargaMotor}</td>
+            <td>${data.pendapatan}</td>
+          `;
+          dataTableBody.appendChild(row);
+        });
+      }
+
+      function listData(){
+        renderTable(pengajuanLeasing, "data-table-body");
+      }
+
+      function filterData(){
+        let filteredData = pengajuanLeasing.filter(function(item) {
+          return (item.usia >= 21 && item.usia <= 55) && item.pendapatan >= 3000000;
+        });
+
+        renderTable(filteredData, "filtered-table-body");
+      }
+
+      function tambahDataKreditur(){
+        const nama = document.getElementById("nama").value;
+        const usia = parseInt(document.getElementById("usia").value);
+        const pekerjaan = document.getElementById("pekerjaan").value;
+        const dp = parseInt(document.getElementById("dpKreditur").value);
+        const hargaMotor = parseInt(document.getElementById("hargaMotorKreditur").value);
+        const pendapatan = parseInt(document.getElementById("pendapatanKreditur").value)
+
+        const newDataKreditur = {
+          nama,
+          usia,
+          pekerjaan,
+          dp,
+          hargaMotor,
+          pendapatan
+        };
+
+        pengajuanLeasing.push(newDataKreditur)
+
+        listData();
+        filterData();
+      }
+
+      window.onload = function() {
+        listData();
+        filterData();
+      };
+  </script>
+</body>
+</html>
